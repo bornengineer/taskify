@@ -78,11 +78,18 @@ body {
   width: 100%;
 }
 
+.completed{
+  text-decoration: line-through;
+}
+
 .task {
-  background: #f4f4f4;
-  margin: 5px;
+  background: hwb(0 96% 4%);
+  margin: 10px 0 10px 8px;
   padding: 10px 20px;
   cursor: pointer;
+  display:flex;
+  flex-direction: column;
+
 }
 
 .task.reminder {

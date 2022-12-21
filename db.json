@@ -1,28 +1,10 @@
 {
   "tasks": [
     {
-      "text": "Make your bed",
-      "time": "2022-12-18T09:00",
+      "text": "kdfjksd",
+      "time": "2022-12-22T04:29",
       "reminder": true,
       "id": 1
-    },
-    {
-      "text": "DE Shaw test",
-      "time": "2022-12-18T10:00",
-      "reminder": true,
-      "id": 2
-    },
-    {
-      "text": "Revise the DSA Topics and Have jugaad for test",
-      "time": "2022-12-18T19:30",
-      "reminder": true,
-      "id": 3
-    },
-    {
-      "text": "Evening Work",
-      "time": "2022-12-18T05:00",
-      "reminder": true,
-      "id": 4
     }
   ]
 }

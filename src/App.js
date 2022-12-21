@@ -59,6 +59,24 @@ function App() {
     return data
   }
 
+  const reminderOff = async (id) => {
+    let taskToToggle = await fetchTask(id)
+
+    let updatedTask = { ...taskToToggle, reminder: false }
+
+    let res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedTask)
+    })
+
+    let data = await res.json()
+
+    setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: false} : task))
+
+    console.log("reminderoff")
+  }
+
   const toggleReminder = async (id) => {
     // console.log("Toggle", id)
     // setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder } : task))
@@ -80,11 +98,13 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <Header toggleAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
-      {showAddTask && <AddTask onAdd={addTask} />}
-      {tasks.length > 0 ? <><p style={{ padding: "0px 0px 10px 0px" }}>&nbsp;Double click a task to toggle reminder</p><Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> </> : <h3>No tasks to show</h3>}
-    </div>
+    <>
+      <div className="container">
+        <Header toggleAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
+        {showAddTask && <AddTask onAdd={addTask} />}
+        {tasks.length > 0 ? <><p style={{ padding: "0px 0px 10px 0px" }}>&nbsp;Double click a task to toggle reminder</p><Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} reminderOff={reminderOff} /> </> : <h3>No tasks to show</h3>}
+      </div>
+    </>
   );
 }
 
