@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const Timer = ({ timee, reminderOff, task }) => {
-  // The data/time we want to countdown to
+const Timer = ({ timee}) => {
+  // The date/time we want to countdown to
   var countDownDate = new Date(timee).getTime();
 
   const [day, setDay] = useState("");
@@ -12,7 +12,6 @@ const Timer = ({ timee, reminderOff, task }) => {
 
   //   console.log(countDownDate," countdown")
 
-  var days, hours, minutes, seconds;
   // Run myfunc every second
 
   // var alerted = false;
@@ -24,6 +23,7 @@ const Timer = ({ timee, reminderOff, task }) => {
 
     // 👇️ take parameter passed from Child component
 
+    var days, hours, minutes, seconds;
     // Calculating the days, hours, minutes and seconds left
     days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
     hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -60,7 +60,7 @@ const Timer = ({ timee, reminderOff, task }) => {
     // Display the message when countdown is over
     if (timeleft < 0) {
       // console.log("end the interval");
-      clearInterval(myfunc);
+      clearInterval(myfunc.current);
       //   document.getElementById("days").innerHTML = "";
       //   document.getElementById("hours").innerHTML = "";
       //   document.getElementById("mins").innerHTML = "";

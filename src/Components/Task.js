@@ -79,7 +79,7 @@ const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
           <p>{timee}</p>
           {!task.complete && (
             <>
-              <Timer timee={timerTime} reminderOff={reminderOff} task={task} />
+              <Timer timee={timerTime}/>
             </>
           )}
         </div>
