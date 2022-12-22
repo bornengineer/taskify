@@ -37,12 +37,13 @@ const AddTask = ({onAdd}) => {
     // const maxx =
     //   yyyy + "-" + mm + "-" + ((dd + 6) % arr[mm - 1]) + "T" + hh + ":" + m;
     // setDateMax(maxx);
-    console.log(dateToday, "UseEffect bola");
-  });
+    // console.log(dateToday, "UseEffect bola");
+  }, [dateToday]);
 
   const [text, setText] = useState("");
   const [time, setTime] = useState("");
-  const [reminder, setReminder] = useState(false);
+  const [reminder, setReminder] = useState(true);
+  const [complete, setComplete] = useState(false);
 
   // when task is added to
   const onSubmit = (e) => {
@@ -54,11 +55,12 @@ const AddTask = ({onAdd}) => {
         return
     }
 
-    onAdd({text, time, reminder})
+    onAdd({text, time, reminder, complete})
 
     setText("")
     setTime("")
-    setReminder(false)
+    // setReminder(false)
+    setComplete(false);
   }
 
 //   max={dateMax} 

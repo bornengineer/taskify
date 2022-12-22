@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Timer = ({ timee, handleClick }) => {
+const Timer = ({ timee, reminderOff, task }) => {
   // The data/time we want to countdown to
   var countDownDate = new Date(timee).getTime();
 
@@ -14,10 +14,15 @@ const Timer = ({ timee, handleClick }) => {
 
   var days, hours, minutes, seconds;
   // Run myfunc every second
+
+  // var alerted = false;
+
   const myfunc = setInterval(function () {
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
     // console.log(timeleft, " timeleft...");
+
+    // 👇️ take parameter passed from Child component
 
     // Calculating the days, hours, minutes and seconds left
     days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
@@ -53,7 +58,9 @@ const Timer = ({ timee, handleClick }) => {
     // document.getElementById("secs").innerHTML = seconds + "s ";
 
     // Display the message when countdown is over
-    if (timeleft < 0) {      
+    if (timeleft < 0) {
+      // console.log("end the interval");
+      clearInterval(myfunc);
       //   document.getElementById("days").innerHTML = "";
       //   document.getElementById("hours").innerHTML = "";
       //   document.getElementById("mins").innerHTML = "";
@@ -64,8 +71,11 @@ const Timer = ({ timee, handleClick }) => {
       setMin("");
       setSec("");
       setTimeup("Time Up!");
-      handleClick(timeleft);
-      clearInterval(myfunc);
+      // if (timeleft<0 && task.reminder) {
+      //   reminderOff(task.id);
+      //   // console.log(task.text + "'s time has begun");
+      //   // alerted = true;
+      // }
     }
   }, 1000);
   return (

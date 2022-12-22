@@ -1,10 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { FaCheckSquare, FaTrash } from "react-icons/fa";
 
 import Timer from "./Timer";
 
-const Task = ({ task, onDelete, onToggle, reminderOff, onComplete }) => {
-  var alerted = false;
+const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
   //  0123456789
   // 2022-02-06T17:00
   const months = [
@@ -22,7 +21,7 @@ const Task = ({ task, onDelete, onToggle, reminderOff, onComplete }) => {
     "Dec",
   ];
 
-  const [complete, setComplete] = useState(false);
+  // const [complete, setComplete] = useState(false);
 
   let timeString = task.time || "";
   // console.log(timeString + " ham bole");
@@ -45,44 +44,42 @@ const Task = ({ task, onDelete, onToggle, reminderOff, onComplete }) => {
     timeString.slice(11, 16) +
     ":00";
 
-  const myfun = function (num) {
-    // 👇️ take parameter passed from Child component
-    if (num < 0 && task.reminder && !alerted) {
-      reminderOff(task.id);
-      alert(task.text + "'s time has begun");
-      alerted = true;
-    }
-  };
-
   return (
     <>
       <div
         style={{
-          height: "90px",
+          // height:"",
           // width: "430px",
           display: "flex",
           flexDirection: "row",
-          justifyContent:"space-between",
+          justifyContent: "space-between",
           padding: "0px",
+          // wordWrap:"break-word",
         }}
         className="task taskCont"
       >
         <div
           className={`task ${task.reminder ? "reminder" : ""} ${
-            complete ? "completed" : ""
+            task.complete ? "completed" : ""
           }`}
           style={{
+            width: "350px",
             display: "flex",
+            height: "auto",
             flexDirection: "column",
             justifyContent: "center",
+            // wordWrap:"break-word",
+            // flexWrap: "wrap",
           }}
           onDoubleClick={() => onToggle(task.id)}
         >
-          <h3>{task.text}</h3>
+          <div style={{ fontSize: "17px", fontWeight: "bold" }}>
+            {task.text}
+          </div>
           <p>{timee}</p>
-          {!complete && (
+          {!task.complete && (
             <>
-              <Timer timee={timerTime} handleClick={myfun} />
+              <Timer timee={timerTime} reminderOff={reminderOff} task={task} />
             </>
           )}
         </div>
@@ -92,15 +89,22 @@ const Task = ({ task, onDelete, onToggle, reminderOff, onComplete }) => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-evenly",
-            marginRight:"20px",
+            marginRight: "20px",
             // border:"1px solid rgba(0,0,0,1)",
             background: "#f4f4f4",
           }}
         >
-          <FaCheckSquare
-            style={{ color: "green", cursor: "pointer" }}
-            onClick={() => onComplete(setComplete(!complete))}
-          />
+          {task.complete ? (
+            <FaCheckSquare
+              style={{ color: "green", cursor: "pointer" }}
+              onClick={() => toggleComplete(task.id)}
+            />
+          ) : (
+            <FaCheckSquare
+              style={{ color: "gray", cursor: "pointer" }}
+              onClick={() => toggleComplete(task.id)}
+            />
+          )}
           <FaTrash
             style={{ color: "red", cursor: "pointer" }}
             onClick={() => onDelete(task.id)}

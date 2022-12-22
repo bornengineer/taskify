@@ -78,7 +78,7 @@ body {
   width: 100%;
 }
 
-.completed{
+.completed {
   text-decoration: line-through;
 }
 
@@ -87,9 +87,9 @@ body {
   margin: 10px 0 10px 8px;
   padding: 10px 20px;
   cursor: pointer;
-  display:flex;
-  flex-direction: column;
-
+  word-wrap: break-word;
+  /* display:flex;
+  flex-direction: column; */
 }
 
 .task.reminder {
