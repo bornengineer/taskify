@@ -1,10 +1,13 @@
-import React from "react";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
-const AddTask = ({onAdd}) => {
+const AddTask = ({ onAdd, setSave, save }) => {
   // to get today date and set min attribute of datetime input as today
   const [dateToday, setDateToday] = useState("");
-//   const [dateMax, setDateMax] = useState("");
+
+  // I can also restrict the max date the user can select by for now i've kept it unrestricted
+  //   const [dateMax, setDateMax] = useState("");
+
   useEffect(() => {
     var today = new Date();
     var dd = today.getDate();
@@ -47,36 +50,73 @@ const AddTask = ({onAdd}) => {
 
   // when task is added to
   const onSubmit = (e) => {
+    // to prevent the page reload
     e.preventDefault();
 
     // handled it with required attribute
-    if(!text){
-        alert("Please enter task name");
-        return
+    if (!text) {
+      alert("Please enter task name");
+      return;
     }
 
-    onAdd({text, time, reminder, complete})
+    onAdd({ text, time, reminder, complete });
 
-    setText("")
-    setTime("")
+    // Swal.fire("Success!", "Your task added successfully.", "success");
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "task added successfully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    // to trigger the addtask useEffect
+    setSave(!save);
+
     // setReminder(false)
+    setText("");
+    setTime("");
     setComplete(false);
-  }
+  };
 
-//   max={dateMax} 
+  //   max={dateMax}
   return (
     <form className="add-form" onSubmit={onSubmit}>
       <div className="form-control">
         <label>Task</label>
-        <input type="text" placeholder="Add Task" required value={text} onChange={(e) => setText(e.target.value)}/>
+        <input
+          type="text"
+          placeholder="Add Task"
+          required
+          autoFocus
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
       </div>
       <div className="form-control">
         <label>Day & Time</label>
-        <input type="datetime-local" min={dateToday} required value={time} onChange={(e) => setTime(e.target.value)} />
+        <input
+          style={{ cursor: "pointer" }}
+          type="datetime-local"
+          min={dateToday}
+          required
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+        />
       </div>
       <div className="form-control form-control-check">
-        <label>Set Reminder</label>
-        <input type="checkbox" checked={reminder} value={reminder} onChange={(e) => setReminder(e.currentTarget.checked)}/>
+        <div className="badge">Set Reminder</div>
+        <label className="toggler-wrapper style-1">
+          <input
+            checked={reminder}
+            value={reminder}
+            onChange={(e) => setReminder(e.currentTarget.checked)}
+            type="checkbox"
+          />
+          <div className="toggler-slider">
+            <div className="toggler-knob"></div>
+          </div>
+        </label>
       </div>
       <input className="btn btn-block" type="submit" value="Save Task" />
     </form>

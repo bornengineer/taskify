@@ -6,20 +6,21 @@ import Tasks from './Components/Tasks'
 function App() {
   const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [save,setSave] = useState(false)
 
   const addTaskToLocalStorage = (items) => {
     localStorage.setItem("react-tasks", JSON.stringify(items))
   };
 
   //add task
-  const addTask = async (task) => {
+  const addTask = (task) => {
     // // console.log(task)
     // writing this in last to add the localStorage Feature
     const id = Math.floor(Math.random() * 10000) + 1;
     const newTask = { id, ...task }
     const newTasks = [...tasks, newTask];
-    setTasks(newTasks);
     addTaskToLocalStorage(newTasks);
+    setTasks(newTasks);
 
     // later wrote this to add json-server
     // const res = await fetch(`http://localhost:5000/tasks`, {
@@ -34,12 +35,12 @@ function App() {
     // setTasks([...tasks, data])
   }
 
-  const toggleComplete = async (id) => {
+  const toggleComplete = (id) => {
     // console.log("Toggle", id)
     const newTasks = tasks.map((task) => task.id === id ? { ...task, complete: !task.complete } : task);
-    setTasks(newTasks)
     addTaskToLocalStorage(newTasks)
-
+    setTasks(newTasks)
+    setSave(!save)
     // for json server connnectivity
     // const taskToToggle = await fetchTask(id)
 
@@ -57,7 +58,7 @@ function App() {
   }
 
   // now to toggle the reminder in json-server also 
-  const toggleReminder = async (id) => {
+  const toggleReminder = (id) => {
     // console.log("Toggle", id)
     // setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder } : task))
 
@@ -65,6 +66,7 @@ function App() {
     const newTasks = tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder } : task);
     setTasks(newTasks)
     addTaskToLocalStorage(newTasks)
+    setSave(!save)
 
     // for json server connnectivity
     // const taskToToggle = await fetchTask(id)
@@ -82,7 +84,7 @@ function App() {
     // setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: data.reminder } : task))
   }
 
-  const reminderOff = async (id) => {
+  const reminderOff = (id) => {
     // commenting cause its not currently in use
     // let taskToToggle = await fetchTask(id)
 
@@ -98,7 +100,7 @@ function App() {
 
     // setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: data.reminder } : task))
 
-    console.log("reminderoff")
+    // console.log("reminderoff")
   }
 
   // Fetch tasks
@@ -114,10 +116,11 @@ function App() {
   //   return data
   // }
 
-  const deleteTask = async (id) => {
+  const deleteTask = (id) => {
     const newTasks = tasks.filter((task) => task.id !== id)
-    setTasks(newTasks)
     addTaskToLocalStorage(newTasks);
+    setTasks(newTasks)
+    setSave(!save)
 
     // await fetch(`http://localhost:5000/tasks/${id}`, {
     //   method: 'DELETE',
@@ -126,33 +129,35 @@ function App() {
   }
 
   // 2022-02-06T17:00
+  const getTasks = async () => {
+    // for json-server
+    // const tasksFromServer = await fetchTasks();
+
+    // for localStorage
+    const tasksFromLocalStorage = JSON.parse(
+      localStorage.getItem("react-tasks")
+    );
+
+    // console.log("get hogaye chala", tasksFromLocalStorage)
+    // console.log(tasksFromServer[0].time + " task from server")
+
+    const minutesFirst = tasksFromLocalStorage.sort((a, b) => a.time.slice(14, 16) - b.time.slice(14, 16));
+    const hoursFirst = minutesFirst.sort((a, b) => a.time.slice(11, 13) - b.time.slice(11, 13));
+    const daysFirst = hoursFirst.sort((a, b) => a.time.slice(8, 10) - b.time.slice(8, 10));
+    const nonCompleteFirst = daysFirst.sort((a, b) => a.complete - b.complete);
+    const reminderFirst = nonCompleteFirst.sort((a, b) => b.reminder - a.reminder);
+    setTasks(reminderFirst);
+  }
+
   useEffect(() => {
-    const getTasks = async () => {
-      // for json-server
-      // const tasksFromServer = await fetchTasks();
-
-      // for localStorage
-      const tasksFromLocalStorage = JSON.parse(
-        localStorage.getItem("react-tasks")
-      );
-
-      // console.log(tasksFromServer[0].time + " task from server")
-      const minutesFirst = tasksFromLocalStorage.sort((a, b) => a.time.slice(14, 16) - b.time.slice(14, 16));
-      const hoursFirst = minutesFirst.sort((a, b) => a.time.slice(11, 13) - b.time.slice(11, 13));
-      const daysFirst = hoursFirst.sort((a, b) => a.time.slice(8, 10) - b.time.slice(8, 10));
-      const nonCompleteFirst = daysFirst.sort((a, b) => a.complete - b.complete);
-      const reminderFirst = nonCompleteFirst.sort((a, b) => b.reminder - a.reminder);
-      setTasks(reminderFirst);
-    }
-
     getTasks();
-  }, [tasks]);
+  }, [save]);
 
   return (
     <>
       <div className="container">
         <Header toggleAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
-        {showAddTask && <AddTask onAdd={addTask} />}
+        {showAddTask && <AddTask onAdd={addTask} setSave={setSave} save={save} />}
         {tasks.length > 0 ? <><p style={{ padding: "0px 0px 10px 0px" }}>&nbsp;Double click a task to toggle reminder</p><Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} reminderOff={reminderOff} toggleComplete={toggleComplete} /> </> : <h3>No tasks to show</h3>}
       </div>
     </>

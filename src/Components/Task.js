@@ -1,9 +1,8 @@
-// import { useState } from "react";
 import { FaCheckSquare, FaTrash } from "react-icons/fa";
 
 import Timer from "./Timer";
 
-const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
+const Task = ({ tasks, task, onDelete, onToggle, toggleComplete }) => {
   //  0123456789
   // 2022-02-06T17:00
   const months = [
@@ -21,10 +20,8 @@ const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
     "Dec",
   ];
 
-  // const [complete, setComplete] = useState(false);
-
   let timeString = task.time || "";
-  // console.log(timeString + " ham bole");
+
   const timee =
     timeString.slice(8, 10) +
     " " +
@@ -48,13 +45,10 @@ const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
     <>
       <div
         style={{
-          // height:"",
-          // width: "430px",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           padding: "0px",
-          // wordWrap:"break-word",
         }}
         className="task taskCont"
       >
@@ -68,8 +62,6 @@ const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
             height: "auto",
             flexDirection: "column",
             justifyContent: "center",
-            // wordWrap:"break-word",
-            // flexWrap: "wrap",
           }}
           onDoubleClick={() => onToggle(task.id)}
         >
@@ -79,7 +71,7 @@ const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
           <p>{timee}</p>
           {!task.complete && (
             <>
-              <Timer timee={timerTime}/>
+              <Timer timee={timerTime} />
             </>
           )}
         </div>
@@ -90,7 +82,6 @@ const Task = ({ task, onDelete, onToggle, reminderOff, toggleComplete }) => {
             flexDirection: "column",
             justifyContent: "space-evenly",
             marginRight: "20px",
-            // border:"1px solid rgba(0,0,0,1)",
             background: "#f4f4f4",
           }}
         >

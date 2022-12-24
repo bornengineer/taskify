@@ -3,7 +3,7 @@ const Tasks = ({tasks, onDelete, onToggle, reminderOff, onComplete, toggleComple
   return (
     <>
       {tasks.map((task) => (
-        <Task key={task.id} task={task} onDelete = {onDelete} onToggle={onToggle} reminderOff={reminderOff} onComplete={onComplete} toggleComplete={toggleComplete}/>
+        <Task key={task.id} task={task} onDelete = {onDelete} onToggle={onToggle} reminderOff={reminderOff} onComplete={onComplete} toggleComplete={toggleComplete} tasks={tasks}/>
       ))}
     </>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Timer = ({ timee}) => {
+const Timer = ({ timee }) => {
   // The date/time we want to countdown to
   var countDownDate = new Date(timee).getTime();
 
@@ -10,18 +10,10 @@ const Timer = ({ timee}) => {
   const [sec, setSec] = useState("");
   const [timeup, setTimeup] = useState("");
 
-  //   console.log(countDownDate," countdown")
-
   // Run myfunc every second
-
-  // var alerted = false;
-
   const myfunc = setInterval(function () {
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
-    // console.log(timeleft, " timeleft...");
-
-    // 👇️ take parameter passed from Child component
 
     var days, hours, minutes, seconds;
     // Calculating the days, hours, minutes and seconds left
@@ -35,12 +27,12 @@ const Timer = ({ timee}) => {
     minutes.toString();
     seconds.toString();
 
+    // parseInt converts string to int
     if (parseInt(days) < 10) days = "0" + days;
     if (parseInt(hours) < 10) hours = "0" + hours;
     if (parseInt(minutes) < 10) minutes = "0" + minutes;
     if (parseInt(seconds) < 10) seconds = "0" + seconds;
 
-    // Result is output to the specific element
     days = "Time left: " + days + "d ";
     hours = hours + "h ";
     minutes = minutes + "m ";
@@ -51,33 +43,17 @@ const Timer = ({ timee}) => {
     setMin(minutes);
     setSec(seconds);
 
-    // // Result is output to the specific element
-    // document.getElementById("days").innerHTML = days + "d ";
-    // document.getElementById("hours").innerHTML = hours + "h ";
-    // document.getElementById("mins").innerHTML = minutes + "m ";
-    // document.getElementById("secs").innerHTML = seconds + "s ";
-
     // Display the message when countdown is over
-    if (timeleft < 0) {
-      // console.log("end the interval");
+    if (timeleft <= 0) {
       clearInterval(myfunc.current);
-      //   document.getElementById("days").innerHTML = "";
-      //   document.getElementById("hours").innerHTML = "";
-      //   document.getElementById("mins").innerHTML = "";
-      //   document.getElementById("secs").innerHTML = "";
-      // document.getElementById("end").innerHTML = "TIME UP!!";
       setDay("");
       setHour("");
       setMin("");
       setSec("");
       setTimeup("Time Up!");
-      // if (timeleft<0 && task.reminder) {
-      //   reminderOff(task.id);
-      //   // console.log(task.text + "'s time has begun");
-      //   // alerted = true;
-      // }
     }
   }, 1000);
+
   return (
     <div style={{ display: "flex", width: "300px" }}>
       <p style={{ display: "flex", marginRight: "5px" }}>{day}</p>
