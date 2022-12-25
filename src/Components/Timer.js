@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
 const Timer = ({ timee }) => {
-  // The date/time we want to countdown to
+  // The date / time we want to countdown to
+  useEffect(() => {
+    timerr();
+  })
   var countDownDate = new Date(timee).getTime();
 
   const [day, setDay] = useState("");
@@ -10,8 +13,10 @@ const Timer = ({ timee }) => {
   const [sec, setSec] = useState("");
   const [timeup, setTimeup] = useState("");
 
+  
   // Run myfunc every second
-  const myfunc = setInterval(function () {
+  let intervalId = null;
+  const timerr = function () {
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
 
@@ -45,15 +50,18 @@ const Timer = ({ timee }) => {
 
     // Display the message when countdown is over
     if (timeleft <= 0) {
-      clearInterval(myfunc.current);
+      clearInterval(intervalId);
       setDay("");
       setHour("");
       setMin("");
       setSec("");
       setTimeup("Time Up!");
     }
-  }, 1000);
+  };
+  // timerr();
 
+  intervalId = setInterval(timerr, 1000);
+  // intervalId;
   return (
     <div style={{ display: "flex", width: "300px" }}>
       <p style={{ display: "flex", marginRight: "5px" }}>{day}</p>

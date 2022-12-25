@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 
 const AddTask = ({ onAdd, setSave, save }) => {
   // to get today date and set min attribute of datetime input as today
@@ -62,13 +61,6 @@ const AddTask = ({ onAdd, setSave, save }) => {
     onAdd({ text, time, reminder, complete });
 
     // Swal.fire("Success!", "Your task added successfully.", "success");
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "task added successfully",
-      showConfirmButton: false,
-      timer: 1500,
-    });
 
     // to trigger the addtask useEffect
     setSave(!save);
