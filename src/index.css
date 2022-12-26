@@ -82,7 +82,7 @@ body {
   /* border: 3px solid rgba(41, 41, 42, 0.1); */
   padding: 30px;
   background-color: rgb(255, 255, 255);
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 2px 2px 1.6px rgba(0, 0, 0, 0.029),
     4.5px 4.5px 3.6px rgba(0, 0, 0, 0.042),
     7.9px 7.9px 6.3px rgba(0, 0, 0, 0.051),
@@ -103,8 +103,41 @@ body {
   margin-bottom: 20px;
 }
 
+/* for sweetalert popup customClass */
 .margin-right {
-  margin-left:-15px;
+  margin-left: -15px;
+}
+
+.how-to-use li {
+  margin: 15px 0px;
+}
+
+.social-links {
+  background: rgba(35, 35, 35, 0.18);
+  position: fixed;
+  left: -5px;
+  top: 39%;
+  border-radius: 0 10px 10px 0;
+  width: 50px;
+  height: 165px;
+  padding: 10px;
+  transform: scale(0.8);
+  transition: all 0.2s;
+}
+
+.social-links:hover {
+  background: rgba(27, 27, 27, 0.225);
+}
+.social-links a svg:hover {
+  transform: scale(1.1);
+}
+
+.social-links a {
+  color: white;
+}
+.social-links a svg {
+  margin: 10px 4px;
+  transition: all 0.1s;
 }
 
 .btn {
@@ -148,7 +181,7 @@ body {
 }
 
 .task.reminder {
-  border-left: 6px solid green;
+  border-left: 6px solid #fc7c7c94;
   margin-left: 10px;
   border-radius: 5px;
 }

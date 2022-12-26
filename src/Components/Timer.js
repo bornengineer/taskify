@@ -1,10 +1,12 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
-const Timer = ({ timee }) => {
-  // The date / time we want to countdown to
+const Timer = ({ task, timee }) => {
   useEffect(() => {
     timerr();
-  })
+  });
+
+  // The date / time we want to countdown to
   var countDownDate = new Date(timee).getTime();
 
   const [day, setDay] = useState("");
@@ -13,12 +15,38 @@ const Timer = ({ timee }) => {
   const [sec, setSec] = useState("");
   const [timeup, setTimeup] = useState("");
 
-  
   // Run myfunc every second
   let intervalId = null;
   const timerr = function () {
     var now = new Date().getTime();
     var timeleft = countDownDate - now;
+
+    if (Math.floor(timeleft / 1000) === 0 && task.reminder) {
+      // Swal.fire({
+      //   title: task.text + "'s time has started/ended!!!",
+      //   showClass: {
+      //     popup: "animate__animated animate__fadeInDown",
+      //   },
+      //   hideClass: {
+      //     popup: "animate__animated animate__fadeOutUp",
+      //   },
+      // });
+      Swal.fire({
+        title: task.text + "'s time has started/ended!!!",
+        width: 600,
+        padding: "3em",
+        icon: "info",
+        color: "#716add",
+        background: "#fff url(/images/trees.png)",
+        customClass: { container: "margin-right" },
+        backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+      });
+    }
 
     var days, hours, minutes, seconds;
     // Calculating the days, hours, minutes and seconds left
@@ -56,12 +84,36 @@ const Timer = ({ timee }) => {
       setMin("");
       setSec("");
       setTimeup("Time Up!");
+      return;
     }
   };
-  // timerr();
 
   intervalId = setInterval(timerr, 1000);
-  // intervalId;
+
+  // useEffect(() => {
+  //   if (
+  //     setDay === "" &&
+  //     setHour === "" &&
+  //     setMin === "" &&
+  //     setSec === "" &&
+  //     timeup === ""
+  //   ) {
+  //     Swal.fire({
+  //       title: "Time Up!",
+  //       width: 600,
+  //       padding: "3em",
+  //       color: "#716add",
+  //       background: "#fff url(/images/trees.png)",
+  //       backdrop: `
+  //           rgba(0,0,123,0.4)
+  //           url("/images/nyan-cat.gif")
+  //           left top
+  //           no-repeat
+  //         `,
+  //     });
+  //   }
+  // }, [timeup]);
+
   return (
     <div style={{ display: "flex", width: "300px" }}>
       <p style={{ display: "flex", marginRight: "5px" }}>{day}</p>

@@ -71,7 +71,7 @@ const Task = ({ tasks, task, onDelete, onToggle, toggleComplete }) => {
           <p>{timee}</p>
           {!task.complete && (
             <>
-              <Timer timee={timerTime} />
+              <Timer task={task} timee={timerTime} />
             </>
           )}
         </div>
